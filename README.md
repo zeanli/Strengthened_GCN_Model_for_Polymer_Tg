@@ -1,4 +1,4 @@
-##Strengthened GCN Model for Polymer Tg Prediction
+<h1>Strengthened GCN Model for Polymer Tg Prediction</h1>                                          
 ***
 This project contains graph con model which can be used to predict Tg of polymers.
 This project references the MPNN model from the open source project chemprop (https://github.com/chemprop/chemprop), as well as the CMC_GCN model from the paper Predicting Critical Micelle Concentrations for Surfactants Using Graph Convolutional Neural Networks（https://doi.org/10.1021/acs.jpcb.1c05264）.
@@ -18,19 +18,14 @@ $ pip install scikit-learn=1.0.2
 $ conda install -c conda-forge rdkit=2020.09.1.0
 $ conda install -c conda-forge tensorboard
 
-
 # clone the source code of Strengthened GCN
 $ git clone https://github.com/zeanli/strengthened-GCN-model-for-polymer-Tg-prediction-
-$ cd MolCLR
 <h2>Usage</h2>
 If you need to train the model, run
-```
-python workflow_test.py
-```
+`python workflow_test.py`
 To augment the data, run
-```python strengthen_ntimes.py```
-
+`python strengthen_ntimes.py`
 To generate psmiles data, run
-```python strengthen_psmiles.py```
+`python strengthen_psmiles.py`
 To perform personalized differential augmentation, run
-```pythobn strengthen_personalized.py```
+`pythobn strengthen_personalized.py`
