@@ -22,7 +22,7 @@ $ conda install -c conda-forge tensorboard
 ```
 ## Clone the source code of Strengthened GCN
 ```
-git clone https://github.com/zeanli/strengthened-GCN-model-for-polymer-Tg-prediction-
+git clone https://github.com/zeanli/Strengthened_GCN_Model_for_Polymer_Tg
 ```
 ## Usage
 To train the model, run  
