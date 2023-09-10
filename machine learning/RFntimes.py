@@ -41,8 +41,8 @@ def get_morgan_fingerprint(smiles_list, radius=3):
 # Generate Morgan fingerprints for training data
 train_fps = get_morgan_fingerprint(train_smiles)
 
-# Create random forest regression model
-rf_model = RandomForestRegressor(n_estimators=500)
+# Create random forest regression model,choose 
+rf_model = RandomForestRegressor(n_estimators=n)
 
 # cross validation
 y_pred = cross_val_predict(rf_model, train_fps, train_target, cv=5)
@@ -50,13 +50,12 @@ y_pred = cross_val_predict(rf_model, train_fps, train_target, cv=5)
 cv_rmse = np.sqrt(mean_squared_error(train_target, y_pred))
 cv_r2 = r2_score(train_target, y_pred)
 
-print("交叉验证的平均RMSE:", cv_rmse)
-print("交叉验证的平均R2得分:", cv_r2)
+print("cvRMSE:", cv_rmse)
+print("cvR2:", cv_r2)
 
-# 训练模型
+# train
 rf_model.fit(train_fps, train_target)
-print("交叉验证的平均RMSE:", cv_rmse)
-print("交叉验证的平均R2得分:", cv_r2)
+
 
 
 # Generate fingerprints for test data
