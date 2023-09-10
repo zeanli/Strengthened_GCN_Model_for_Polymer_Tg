@@ -41,3 +41,5 @@ To perform personalized differential augmentation, run
 ```
 pythobn strengthen_personalized.py
 ```
+Three classic machine learning models are in the machine learning folder,you can change the data path and parameters as needed.
+To use MPNN model,You can follow the project documentation in https://github.com/chemprop/chemprop ,data needs to be replaced with the files in the dataset folder.
