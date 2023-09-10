@@ -1,24 +1,19 @@
 import os
-
 import pandas as pd
 from rdkit import Chem
 from rdkit.Chem import AllChem
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.model_selection import cross_val_predict
-from sklearn.model_selection import cross_val_score
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split
 from tqdm import tqdm
 import numpy as np
 
 # Load training data
-train_data = pd.read_csv('data_path')
+train_data = pd.read_csv('train_data.csv')
 
 # Extract SMILES strings and target values from training data
 train_smiles = train_data['smiles']
 train_target = train_data['tg']
-
 
 # Generate Morgan fingerprints for training data
 def get_morgan_fingerprint(smiles_list, radius=3):
@@ -41,68 +36,53 @@ def get_morgan_fingerprint(smiles_list, radius=3):
 # Generate Morgan fingerprints for training data
 train_fps = get_morgan_fingerprint(train_smiles)
 
-# Create random forest regression model,choose 
-rf_model = RandomForestRegressor(n_estimators=n)
+# Split the data into training and testing sets (80% training, 20% testing)
+X_train, X_test, y_train, y_test = train_test_split(train_fps, train_target, test_size=0.2, random_state=42)
 
-# cross validation
-y_pred = cross_val_predict(rf_model, train_fps, train_target, cv=5)
+# Create random forest regression model
+rf_model = RandomForestRegressor(n_estimators=100)
 
-cv_rmse = np.sqrt(mean_squared_error(train_target, y_pred))
-cv_r2 = r2_score(train_target, y_pred)
+# Train the model
+rf_model.fit(X_train, y_train)
 
-print("cvRMSE:", cv_rmse)
-print("cvR2:", cv_r2)
+# Make predictions on the test data
+y_pred = rf_model.predict(X_test)
 
-# train
-rf_model.fit(train_fps, train_target)
+# Evaluate the model on the test data
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2 = r2_score(y_test, y_pred)
 
+print("RMSE:", rmse)
+print("R2 Score:", r2)
 
-
-# Generate fingerprints for test data
-test_data = pd.read_csv('data_path')
-X_test = test_data['smiles']
-
-test_data = pd.read_csv('tests27.csv')
-
-
+# Generate fingerprints for the actual test data
+test_data = pd.read_csv('test_data.csv')
 test_smiles = test_data['smiles']
 test_target = test_data['tg']
 
+test_fps = get_morgan_fingerprint(test_smiles)
 
-test_fps = []
-test_mols = []
-for smiles in test_data['smiles']:
-    try:
-        mol = Chem.MolFromSmiles(smiles)
-        if mol is not None:
-            test_mols.append(mol)
-            fp = AllChem.GetMorganFingerprintAsBitVect(mol, radius=3)
-            test_fps.append(fp)
-        else:
-            print(f"Invalid SMILES: {smiles}")
-    except Exception as e:
-        print(f"Error processing SMILES: {smiles}")
-        print(f"Error message: {str(e)}")
-
-# Make predictions on test data
+# Make predictions on the actual test data
 predictions = []
 for _ in range(1000):
     preds = rf_model.predict(test_fps)
     predictions.append(preds)
 
-average_predictions = sum(predictions) / len(predictions)
+average_predictions = np.mean(predictions, axis=0)
 
-# Evaluate model on test data
-rmse = mean_squared_error(test_target, average_predictions, squared=False)
+# Evaluate the model on the actual test data
+rmse = np.sqrt(mean_squared_error(test_target, average_predictions))
 r2 = r2_score(test_target, average_predictions)
 
-# save
+# Save the results
 result_df = pd.DataFrame({'tg': test_target, 'tg_pred': average_predictions})
-result_df.to_csv('data_path', index=False)
+result_df.to_csv('results.csv', index=False)
 
 with open('metrics.txt', 'w') as f:
     f.write(f'RMSE: {rmse:.2f}\n')
     f.write(f'R2 Score: {r2:.2f}\n')
-print(f' R2: {r2:.2f},RMSE:{rmse:.2f}')
+
+print(f' R2: {r2:.2f}, RMSE: {rmse:.2f}')
+
 result_df = pd.DataFrame({'RMSE': [rmse], 'R2': [r2]})
-result_df.to_csv('data_path', mode='a', header=not os.path.exists('rf_results.csv'), index=False)
+result_df.to_csv('rf_results.csv', mode='a', header=not os.path.exists('rf_results.csv'), index=False)
