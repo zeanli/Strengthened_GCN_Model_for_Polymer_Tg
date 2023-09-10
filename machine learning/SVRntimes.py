@@ -21,8 +21,8 @@ data = pd.read_csv('data_path')
 
 rmse_list = []
 r2_list = []
-
-for i in range(10):
+#slect test times
+for i in range(x):
 
   # Randomly split data into train and validation
   train, val_test = train_test_split(data, test_size=0.2, random_state=i)
