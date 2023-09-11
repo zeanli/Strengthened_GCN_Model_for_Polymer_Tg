@@ -48,27 +48,27 @@ all_idx = []
 smlstr = []
 
 
-with open('../data/300_psmiles_test.csv','r') as  csvDataFile:
+with open('psmiles.csv','r') as  csvDataFile:
     csvReader = csv.reader(csvDataFile)        
     for row in csvReader:
         smlstr.append(row[0])
 
-with open('../data/300_psmiles_test.csv','r') as  csvDataFile:
+with open('psmiels.csv','r') as  csvDataFile:
     csvReader = csv.reader(csvDataFile)        
     column_0 = [row[0] for row in csvReader]
     df_0['A']=(column_0)
     
-with open('../data/300_psmiles_test.csv','r') as  csvDataFile:
+with open('psmiles.csv','r') as  csvDataFile:
     csvReader = csv.reader(csvDataFile)        
     column_1 = [row[1] for row in csvReader]
     df_0['B']=(column_1)
     
-with open('../data/300_psmiles_test.csv','r') as  csvDataFile:
+with open('psmiles.csv','r') as  csvDataFile:
     csvReader = csv.reader(csvDataFile)        
     column_2 = [row[2] for row in csvReader]
     df_0['C']=(column_2)
 
-with open('../data/300_psmiles_test.csv','r') as  csvDataFile:
+with open('psmiles.csv','r') as  csvDataFile:
     csvReader = csv.reader(csvDataFile)        
     column_3 = [row[3] for row in csvReader]
     df_0['D']=(column_3)
@@ -159,7 +159,7 @@ print('df_train_all:',df_train_all)
 
 df_train_all.drop(columns = ['C','D'],inplace = True)
 df_train_all = pd.concat([df_train_all, df_test], ignore_index = True)
-df_train_all.to_csv('../data/300_psmiles_personal.csv', header =False, index = False)
+df_train_all.to_csv('save_data_path', header =False, index = False)
 
 
 '''

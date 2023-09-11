@@ -204,8 +204,8 @@ class Logger(object):
 
 def main(args):
     
-    
-    sys.stdout = Logger('../data/Ag/300_psmilesp_loss.txt')
+#create a loss.txt file     
+    sys.stdout = Logger('loss.txt')
        
     # fix random seeds
     torch.manual_seed(args.seed)
