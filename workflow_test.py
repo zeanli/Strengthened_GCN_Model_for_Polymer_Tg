@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+                         # -*- coding: utf-8 -*-
 """
 Created on Tue Jun 16 15:26:24 2020
 
@@ -215,7 +215,7 @@ def main(args):
     # load CSV dataset
     smlstr = []
     logCMC = []
-    with open("../data/300_psmiles_personal_Si.csv") as csvDataFile:
+    with open("data_train") as csvDataFile:
         csvReader = csv.reader(csvDataFile)
         for row in csvReader:
             smlstr.append(row[0])
