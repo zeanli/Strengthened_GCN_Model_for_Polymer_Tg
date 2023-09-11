@@ -52,24 +52,23 @@ def canonical_smile(sml):
     
 df_train = pd.DataFrame()
 df_test = pd.DataFrame()
-
-
-with open('../data/272_train.csv','r') as  csvDataFile:
+#data_path need tobe replaced with the dataset you want to train
+with open('data_path','r') as  csvDataFile:
     csvReader = csv.reader(csvDataFile)        
     column_0 = [row[0] for row in csvReader]
     df_train['A']=(column_0)
     
-with open('../data/272_train.csv','r') as  csvDataFile:
+with open('data_path','r') as  csvDataFile:
     csvReader = csv.reader(csvDataFile)        
     column_1 = [row[1] for row in csvReader]
     df_train['B']=(column_1)
     
-with open('../data/27_test.csv','r') as  csvDataFile:
+with open('data_path','r') as  csvDataFile:
     csvReader = csv.reader(csvDataFile)        
     column_2 = [row[0] for row in csvReader]
     df_test['A']=(column_2)
 
-with open('../data/27_test.csv','r') as  csvDataFile:
+with open('data_path','r') as  csvDataFile:
     csvReader = csv.reader(csvDataFile)        
     column_3 = [row[1] for row in csvReader]
     df_test['B']=(column_3)
@@ -86,9 +85,9 @@ with open('../data/yanshi.csv','r') as  csvDataFile:
     df_train['B']=(column_1)
 '''
     
-#----personalized strengthen
+#----personalized strengthen,choose
 df_train_all = pd.DataFrame()
-n_times = 10  #n-1
+n_times = 1  #n-1
 
 
 
@@ -106,7 +105,7 @@ print('df_train_all:',df_train_all)
 
 df_train_all = pd.concat([df_train_all, df_test], ignore_index = True)
 
-df_train_all.to_csv('../data/{}yanshi_12.csv'.format(n_times), header =False, index = False)
+df_train_all.to_csv('.csv'.format(n_times), header =False, index = False)
     
     
 '''smlstr = np.asarray(smlstr)
@@ -118,7 +117,7 @@ for m in range(1,10):
         canonical_smi = canonical_smile(tmp)
         new_smiles = randomize_smile(tmp)
         df.loc[i,['canonical','1']] = [canonical_smi, new_smiles]
-        df.to_csv('../data/300/data_strength_300_3_{}stren.csv'.format(m))'''
+        df.to_csv('savr_path)'''
         
         
         
