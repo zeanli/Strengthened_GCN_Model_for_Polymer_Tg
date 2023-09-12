@@ -77,15 +77,15 @@ parser.add_argument('--dataset', default='nonionic',
                     help='nonionic or all')
 parser.add_argument('--skip_cv', action='store_true',
                     help='if skip cross validation')
-# tensorboard writer
-writer = SummaryWriter('../gnn_logs/')
+# tensorboard writer,users need to create a folder to save the results
+writer = SummaryWriter('gnn_logs/')
 
 
 # Save check point
 def save_checkpoint(state, fname):
     # skip the optimization state
     state.pop('optimizer', None)
-    torch.save(state, r'../gnn_logs/{}.pth.tar'.format(fname))
+    torch.save(state, r'.gnn_logs/{}.pth.tar'.format(fname))
 
 
 # Train function
@@ -204,7 +204,7 @@ class Logger(object):
 
 def main(args):
     
-#create a loss.txt file     
+# users need to create a loss.txt file     
     sys.stdout = Logger('loss.txt')
        
     # fix random seeds
@@ -257,14 +257,14 @@ def main(args):
 
         
     # save train/test data and index corresponding to the original dataset
-    pickle.dump(smlstr_train,open("../gnn_logs/smlstr_train.p","wb"))
-    pickle.dump(smlstr_test,open("../gnn_logs/smlstr_test.p","wb"))
-    pickle.dump(logCMC_train,open("../gnn_logs/logCMC_train.p","wb"))
-    pickle.dump(logCMC_test,open("../gnn_logs/logCMC_test.p","wb"))
-    pickle.dump(train_full_ind,open("../gnn_logs/original_ind_train_full.p","wb"))
-    pickle.dump(test_ind,open("../gnn_logs/original_ind_test.p","wb"))
+    pickle.dump(smlstr_train,open("gnn_logs/smlstr_train.p","wb"))
+    pickle.dump(smlstr_test,open("gnn_logs/smlstr_test.p","wb"))
+    pickle.dump(logCMC_train,open("gnn_logs/logCMC_train.p","wb"))
+    pickle.dump(logCMC_test,open("gnn_logs/logCMC_test.p","wb"))
+    pickle.dump(train_full_ind,open("gnn_logs/original_ind_train_full.p","wb"))
+    pickle.dump(test_ind,open("nn_logs/original_ind_test.p","wb"))
     rows = zip(train_full_ind,smlstr_train,logCMC_train)
-    with open("../gnn_logs/dataset_train.csv",'w',newline='') as f:
+    with open("gnn_logs/dataset_train.csv",'w',newline='') as f:
         writer = csv.writer(f,delimiter=',')
         for row in rows:
             writer.writerow(row)
@@ -374,8 +374,8 @@ def main(args):
             stage = 'testval'
             predict(valid_dataset, model, -1, args, fname, stage)
             cv_index += 1
-        pickle.dump(index_list_train,open("../gnn_logs/ind_train_list.p","wb"))
-        pickle.dump(index_list_valid,open("../gnn_logs/ind_val_list.p","wb"))
+        pickle.dump(index_list_train,open("gnn_logs/ind_train_list.p","wb"))
+        pickle.dump(index_list_valid,open("gnn_logs/ind_val_list.p","wb"))
         cv_index += 1
 
     else:
