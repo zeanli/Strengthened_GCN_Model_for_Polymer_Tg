@@ -29,10 +29,12 @@ To train the model, run
 ```
 $ python workflow_test.py
 ```
+
 To augment the data, run
 ```
 python strengthen_ntimes.py
 ```
+this will generate a csv file contained two columns
 To generate psmiles data, run
 ```
 python strengthen_psmiles.py
@@ -41,5 +43,6 @@ To perform personalized differential augmentation, run
 ```
 pythobn strengthen_personalized.py
 ```
+this will generate a csv file contained 4 columns
 Three classic machine learning models are in the machine learning folder,you can change the data path and parameters as needed.
 To use MPNN model,You can follow the project documentation in https://github.com/chemprop/chemprop ,data needs to be replaced with the files in the dataset folder.
